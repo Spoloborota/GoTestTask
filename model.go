@@ -12,14 +12,9 @@ type ticks struct {
 	ask       float64 `json:"ask"`
 }
 
-func (t *ticks) updateTickAsk(db *sql.DB) error {
-	statement := fmt.Sprintf("UPDATE ticks SET ask = '%f', timestamp = %d WHERE symbol = '%s'", t.ask, t.timestamp, t.symbol)
-	_, err := db.Exec(statement)
-	return err
-}
-
-func (t *ticks) updateTickBid(db *sql.DB) error {
-	statement := fmt.Sprintf("UPDATE ticks SET bid = '%f', timestamp = %d WHERE symbol = '%s'", t.bid, t.timestamp, t.symbol)
+func (t *ticks) update(db *sql.DB) error {
+	statement := fmt.Sprintf("UPDATE testsdb.ticks SET ask = %f, bid = %f, timestamp = %d WHERE symbol = '%s'", t.ask, t.bid, t.timestamp, t.symbol)
+	fmt.Println(statement)
 	_, err := db.Exec(statement)
 	return err
 }
